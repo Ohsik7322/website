@@ -1,0 +1,185 @@
+/* Kisho Hoshi - personal academic website */
+
+:root {
+  --bg: #fdfdfb;
+  --text: #1f2328;
+  --muted: #5b6168;
+  --ubc-blue: #002145;         /* UBC primary (brand.ubc.ca) */
+  --accent: #0055b7;           /* UBC secondary blue, PMS 2935 */
+  --accent-hover: #002145;
+  --rule: #d9dbdf;
+  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #16181c;
+    --text: #e4e6ea;
+    --muted: #a0a6ad;
+    --accent: #6ec4e8;         /* lighter UBC secondary blue, readable on dark */
+    --accent-hover: #97d4e9;
+    --rule: #33373e;
+    color-scheme: dark;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+
+.wrap {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover, a:focus-visible { color: var(--accent-hover); text-decoration: underline; }
+
+/* ---------- header and navigation ---------- */
+
+/* UBC Blue band with white text, in both light and dark mode */
+.site-header {
+  background: var(--ubc-blue);
+  padding: 1.1rem 0;
+}
+
+.site-header .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+}
+
+.site-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 0.01em;
+}
+.site-name:hover, .site-name:focus-visible { color: #ffffff; text-decoration: none; }
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+}
+.site-nav a { color: rgba(255, 255, 255, 0.8); }
+.site-nav a:hover, .site-nav a:focus-visible { color: #ffffff; }
+.site-nav a[aria-current="page"] { color: #ffffff; font-weight: 600; }
+.site-header a:focus-visible { outline: 2px solid #ffffff; outline-offset: 3px; }
+/* on a dark page the navy band needs an edge to stand out */
+@media (prefers-color-scheme: dark) {
+  .site-header { border-bottom: 2px solid #0055b7; }
+}
+
+/* ---------- main content ---------- */
+
+main { padding: 2rem 0 3rem; }
+
+h1 { font-size: 2rem; line-height: 1.2; margin: 0 0 0.25rem; }
+h2 {
+  font-size: 1.25rem;
+  margin: 2.25rem 0 0.75rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--rule);
+}
+main > .wrap > h2:first-child { margin-top: 0; }
+
+p { margin: 0 0 1rem; }
+
+/* page heading for screen readers on pages whose visible headings start at h2 */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.subtitle { color: var(--muted); margin: 0 0 1.25rem; }
+
+/* home page: photo beside intro when a photo is present */
+.profile {
+  display: flex;
+  gap: 1.75rem;
+  align-items: flex-start;
+}
+.profile img {
+  width: 11rem;
+  height: auto;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+@media (max-width: 36rem) {
+  .profile { flex-direction: column; }
+  .profile img { width: 9rem; }
+}
+
+.jm-note { font-weight: 700; }
+
+/* ---------- research entries ---------- */
+
+.paper { margin: 0 0 1.5rem; }
+.paper-title { font-weight: 600; display: block; width: fit-content; }
+.paper-meta { display: block; color: var(--muted); font-size: 1rem; }
+.paper-meta em { color: var(--text); }
+/* links inside running text are underlined, not told apart by colour alone */
+.paper-meta a, main p a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.15em; }
+
+details { margin-top: 0.35rem; font-size: 1rem; }
+summary {
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  color: var(--accent);
+  width: fit-content;
+}
+details p { margin: 0.5rem 0 0; text-align: justify; hyphens: auto; }
+
+/* ---------- teaching ---------- */
+
+h3 { font-size: 1.05rem; margin: 1.5rem 0 0.25rem; }
+.role { color: var(--muted); font-style: italic; margin: 0 0 0.5rem; }
+
+.course-list { list-style: none; padding: 0; margin: 0 0 1rem; }
+.course-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.3rem 0;
+  border-bottom: 1px dotted var(--rule);
+}
+.course-list .term { color: var(--muted); text-align: right; white-space: nowrap; }
+@media (max-width: 36rem) {
+  .course-list li { flex-direction: column; gap: 0; }
+  .course-list .term { text-align: left; white-space: normal; }
+}
+
+/* ---------- footer ---------- */
+
+.site-footer {
+  border-top: 1px solid var(--rule);
+  padding: 1rem 0 2rem;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--muted);
+}
